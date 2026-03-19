@@ -1,0 +1,46 @@
+<!-- Third-Party Instagram Widget Snippet (Root Fallback)
+===============================================================================
+This is a fallback location for your Instagram widget provider's embed code.
+If your service requires placing code at the root, paste it here.
+
+Examples:
+  <!-- Example: SnapWidget -->
+  <script src="https://snapwidget.com/js/snapwidget.js" async></script>
+  <iframe src="https://snapwidget.com/embed/12345" class="snapwidget-widget" 
+          allowtransparency="true" frameborder="0" scrolling="no"
+          style="border:none; overflow:hidden; width:100%;"></iframe>
+
+After pasting, save this file and refresh the site. The widget will render inside
+the Instagram section on the homepage.
+===============================================================================
+-->
+
+<!-- Temporary visual placeholder (replaced by your widget when added) -->
+<style>
+  .ig-widget-placeholder {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  @media (min-width: 640px) {
+    .ig-widget-placeholder { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 768px) {
+    .ig-widget-placeholder { grid-template-columns: repeat(4, 1fr); }
+  }
+  .ig-widget-card {
+    background: #e5e7eb;
+    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+  }
+</style>
+<div class="ig-widget-placeholder" aria-label="Instagram feed placeholder (root)">
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+  <div class="ig-widget-card"></div>
+</div>
