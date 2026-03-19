@@ -1,0 +1,91 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "home"
+    label: "Homepage"
+    files:
+      - name: "home"
+        label: "Home Caption"
+        file: "public/content/home.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "about"
+        label: "About"
+        file: "public/content/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+      - name: "donations"
+        label: "Donations"
+        file: "public/content/donations.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+      - name: "faq"
+        label: "FAQ"
+        file: "public/content/faq.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+      - name: "contact"
+        label: "Contact"
+        file: "public/content/contact.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "events"
+    label: "Events"
+    label_singular: "Event"
+    folder: "public/content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    format: "frontmatter"
+    extension: "md"
+    sortable_fields: ["date", "title"]
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "status", label: "Status", widget: "select", options: ["Upcoming", "To Be Decided"], default: "Upcoming" }
+      - { name: "date", label: "Date", widget: "datetime", format: "YYYY-MM-DD", required: false }
+      - { name: "location", label: "Location", widget: "string", required: false }
+      - { name: "image", label: "Image", widget: "image", required: false }
+      - { name: "tags", label: "Tags", widget: "list", required: false }
+      - { name: "body", label: "Body", widget: "markdown" }
+
+  - name: "events_index"
+    label: "Events Index"
+    files:
+      - name: "index"
+        label: "Events Index JSON"
+        file: "public/content/events/index.json"
+        format: "json"
+        fields:
+          - label: "Updated At"
+            name: "updated_at"
+            widget: "datetime"
+            format: "YYYY-MM-DDTHH:mm:ss[Z]"
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}} ({{fields.date}})"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string" }
+              - { label: "Status", name: "status", widget: "select", options: ["Upcoming", "To Be Decided"], default: "Upcoming" }
+              - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", required: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+              - { label: "Path", name: "path", widget: "string" }
+              - { label: "Tags", name: "tags", widget: "list", required: false }
