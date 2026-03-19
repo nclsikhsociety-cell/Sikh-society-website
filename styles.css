@@ -1,0 +1,338 @@
+/* =========================================
+   Sociology Society - Structured Full-Width Layout
+   Navy & Gold Academic Styling, Dark Mode Support
+   Decap CMS compatible: preserve common IDs/classes and non-destructive overrides
+   v6 - layout redesign
+   ========================================= */
+
+/* Color tokens */
+:root {
+  --navy-900: #0b1e3b;
+  --navy-700: #14325e;
+  --navy-600: #1d4478;
+  --gold-500: #c9a227;
+  --gold-600: #b9931f;
+  --gold-700: #a78417;
+
+  --bg: #ffffff;
+  --text: #0c1524;
+  --muted: #445066;
+  --surface: #f8fafc;
+  --border: #e2e8f0;
+
+  --hero-grad-start: #0b1e3b;
+  --hero-grad-end: #14325e;
+
+  --shadow-1: 0 1px 2px rgba(10, 20, 40, 0.06), 0 2px 8px rgba(10, 20, 40, 0.08);
+  --shadow-2: 0 6px 12px rgba(10, 20, 40, 0.10), 0 2px 24px rgba(10, 20, 40, 0.12);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --maxw: 1280px;
+  --section-pad: 64px;
+  --gap: 24px;
+}
+
+/* Dark mode support (script toggles data-theme="dark" or body.dark) */
+[data-theme="dark"], body.dark {
+  --bg: #0a0f1a;
+  --text: #e6edf6;
+  --muted: #b3bed1;
+  --surface: #0f172a;
+  --border: #1f2937;
+
+  --hero-grad-start: #0b1e3b;
+  --hero-grad-end: #1d4478;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 6px 12px rgba(0, 0, 0, 0.50), 0 2px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Global reset/surface */
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg) !important; /* force theme background globally */
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height: 1.6;
+  height: 100%;
+}
+
+/* Sticky footer layout */
+body { 
+  min-height: 100vh; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+/* Containers and sections */
+.container-full { width: 100%; }
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+.section { padding-block: var(--section-pad); }
+
+/* Header + Navigation */
+.site-header {
+  width: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--gap);
+  padding-block: 16px;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand .logo { width: 48px; height: 48px; flex-shrink: 0; }
+.brand .site-title { font-size: 1.5rem; font-weight: 700; color: var(--navy-900); }
+[data-theme="dark"] .brand .site-title, body.dark .brand .site-title { color: #e6edf6; }
+
+.site-nav {
+  width: 100%;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.site-nav .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 12px;
+}
+.nav-links { display: flex; flex-wrap: wrap; gap: 12px 20px; }
+.nav-links a {
+  text-decoration: none; color: var(--text);
+  padding: 8px 12px; border-radius: var(--radius-sm);
+}
+.nav-links a:hover { background: var(--surface); }
+
+.theme-toggle { display: inline-flex; align-items: center; gap: 8px; }
+.theme-toggle button {
+  background: var(--navy-900); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: 8px 12px; cursor: pointer; box-shadow: var(--shadow-1);
+}
+.theme-toggle button:hover { background: var(--navy-700); }
+
+/* Hero: enforce two-column layout */
+.hero {
+  background: var(--bg);
+  color: var(--text);
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr; /* smaller caption (left), larger widget (right) */
+  gap: var(--gap);
+  align-items: start;
+}
+.hero h1 { font-size: clamp(2rem, 3vw, 3rem); line-height: 1.2; margin: 0 0 12px 0; }
+.hero p.lead { font-size: 1.125rem; color: #e6edf6; margin: 0 0 24px 0; }
+.hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-caption { background: rgba(255,255,255,0.06); padding: 16px; border-radius: var(--radius-md); }
+.hero-instagram { min-height: 520px; }
+.instagram-embed, .lightwidget-widget { width: 100%; min-height: 520px; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px; border-radius: var(--radius-sm); border: 1px solid transparent;
+  font-weight: 600; cursor: pointer; text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+.btn-primary { background: var(--gold-500); color: var(--navy-900); }
+.btn-primary:hover { background: var(--gold-600); box-shadow: var(--shadow-1); }
+.btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
+.btn-outline:hover { background: rgba(255,255,255,0.08); }
+
+/* CTA bar */
+.cta-bar { background: var(--surface); color: var(--text); }
+.cta-bar .container { display: grid; grid-template-columns: 1fr auto; gap: var(--gap); align-items: center; }
+.cta-bar .cta-text { font-size: 1.25rem; }
+/* Use default .btn styles; avoid hardcoded overrides for theme consistency */
+
+/* Content area default */
+main.content, #content { width: 100%; flex: 1 0 auto; background: var(--bg); }
+.article, .post, .page-content { max-width: var(--maxw); margin-inline: auto; padding-inline: 24px; }
+
+/* Contact form (enhanced) */
+/* Scope spacing and centering to contact page only */
+body[data-md="content/contact.md"] .page-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* ensure a full-width track */
+  justify-items: stretch;                 /* let children (form) fill width */
+  padding: 32px 16px;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  body[data-md="content/contact.md"] .page-content { padding: 48px 24px; }
+}
+@media (min-width: 768px) {
+  body[data-md="content/contact.md"] .page-content { min-height: 70vh; align-content: center; }
+}
+
+/* Card-style form container */
+.contact-form {
+  max-width: 900px;  /* wide default */
+  width: 100%;
+  margin: 24px auto 48px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+}
+/* Desktop: wider rectangle and more square corners */
+@media (min-width: 1024px) {
+  .contact-form { max-width: 1000px; border-radius: 8px; }
+}
+@media (min-width: 1280px) {
+  .contact-form { max-width: 1100px; }
+}
+
+/* Field layout and spacing */
+/* Two-column layout for the first row fields on desktop */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 1024px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+/* Avoid double vertical spacing when in a grid; rely on grid gap */
+.form-grid .form-row { margin-bottom: 0; }
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.contact-form label {
+  font-weight: 600;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* Focus states */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.25);
+}
+
+/* Submit button – modern style */
+.contact-form .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 9999px; /* pill */
+  font-weight: 700;
+  background: var(--gold-500);
+  color: var(--navy-900);
+  border: none;
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+.contact-form .btn-primary:hover {
+  background: var(--gold-600);
+  box-shadow: var(--shadow-1);
+  transform: translateY(-1px);
+}
+.contact-form .btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Success message styling */
+#form-success {
+  width: 100%;
+  max-width: 1100px;           /* align success notice with the wide form */
+  margin: -24px auto 24px;     /* visually connect with the card */
+  padding: 12px 14px;
+  border-left: 4px solid var(--gold-500);
+  background: rgba(0,0,0,0.04);
+  border-radius: 8px;
+  color: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+  #form-success { background: rgba(255,255,255,0.06); }
+}
+/* Footer */
+.event-status-tbd { font-style: italic; }
+.site-footer { border-top: 1px solid var(--border); background: var(--surface); padding: 24px 0; color: var(--muted); margin-top: auto; }
+
+/* Utility */
+.spacer-sm { height: 12px; }
+.spacer-md { height: 24px; }
+.spacer-lg { height: 48px; }
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .hero .container { grid-template-columns: 1fr; }
+}
+
+/* Ensure images are responsive */
+img { max-width: 100%; height: auto; display: block; }
+
+/* Prevent horizontal scrolling */
+html, body { overflow-x: hidden; }
+
+
+
+
+
+
+
+/* Light mode tokens: force white globally across all pages */
+[data-theme="light"], body:not([data-theme]) {
+  --bg: #ffffff;
+  --surface: #ffffff;
+}
+
+/* Hero uses theme background/text */
+body[data-theme="light"] .hero,
+body:not([data-theme]) .hero {
+  background: var(--bg);
+  color: var(--text);
+}
+
+body.home[data-theme="light"] .hero h1,
+body.home:not([data-theme]) .hero h1 {
+  color: var(--text);
+}
+body.home[data-theme="light"] .hero p.lead,
+body.home:not([data-theme]) .hero p.lead {
+  color: var(--muted);
+}
+body.home[data-theme="light"] .btn.btn-outline,
+body.home:not([data-theme]) .btn.btn-outline {
+  color: var(--navy-900);
+  border-color: rgba(0,0,0,0.25);
+}
+body.home[data-theme="light"] .btn.btn-outline:hover,
+body.home:not([data-theme]) .btn.btn-outline:hover {
+  background: rgba(0,0,0,0.06);
+}
