@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCLSikhSoc — Merchandise</title>
+  <meta name="description" content="Official merchandise of NCLSikhSoc (North East Sikh Soc)" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <script defer src="script.js?v=12"></script>
+  <style>
+    .merch-hero { padding-block: 40px; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .merch-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 700px) { .merch-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .merch-grid { grid-template-columns: repeat(3, 1fr); } }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-1); display: flex; flex-direction: column; }
+    .card img { width: 100%; height: auto; display: block; aspect-ratio: 4/3; object-fit: cover; background: #f2f4f7; }
+    .card-body { padding: 14px; display: grid; gap: 8px; }
+    .card-title { font-weight: 700; }
+    .price { font-weight: 700; color: var(--navy-900); }
+    .variants { display: flex; flex-wrap: wrap; gap: 6px; }
+    .badge { padding: 4px 8px; border-radius: 9999px; border: 1px solid var(--border); background: #fff; font-size: 12px; color: var(--muted); }
+    .muted { color: var(--muted); }
+    .empty { background: var(--surface); border: 1px dashed var(--border); border-radius: 12px; padding: 16px; text-align: center; color: var(--muted); }
+  </style>
+</head>
+<body class="merch">
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <div class="container">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="crest" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#0b1e3b"/>
+              <stop offset="100%" stop-color="#14325e"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="48" height="48" rx="10" fill="url(#crest)" stroke="#c9a227" stroke-width="3"/>
+          <path d="M20 42c6-3 12-3 24 0" stroke="#c9a227" stroke-width="2" fill="none"/>
+        </svg>
+        <div class="site-title" id="site-title">NCLSikhSoc <small style="font-weight:500;color:var(--muted);">— North East Sikh Soc</small></div>
+      </div>
+      <div class="spacer-md" aria-hidden="true"></div>
+      <div class="theme-toggle">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode">Toggle Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="site-nav" id="site-nav" aria-label="Main">
+    <div class="container">
+      <div class="nav-links" id="nav-list">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="merch.html" aria-current="page">Merch</a>
+        <a href="donations.html">Donations</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="content" class="content">
+    <section class="merch-hero">
+      <div class="container">
+        <h1>Merchandise</h1>
+        <p class="muted">Official society merchandise. Items listed below are managed by the committee via the Admin dashboard.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div id="merch-list" class="merch-grid" aria-live="polite">
+          <div class="empty">No items yet. Once a committee member adds merchandise in the Admin, it will appear here.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© NCLSikhSoc</div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function () {
+      const grid = document.getElementById('merch-list');
+      if (!grid) return;
+      try {
+        const res = await fetch('content/merch.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('fetch merch.json failed');
+        const data = await res.json();
+        const items = Array.isArray(data.items) ? data.items : [];
+
+        const visible = items.filter(it => it && (it.published !== false));
+        if (!visible.length) return;
+
+        grid.innerHTML = '';
+        for (const it of visible) {
+          const title = it.title || 'Untitled Item';
+          const price = typeof it.price === 'number' ? it.price.toFixed(2) : (it.price || '');
+          const imgs = Array.isArray(it.images) ? it.images.map(o => (o && (o.image || o))) : [];
+          const img = imgs[0] || '';
+          const desc = (it.description || '').toString();
+
+          const sizes = (it.variants && Array.isArray(it.variants.sizes)) ? it.variants.sizes : [];
+          const colors = (it.variants && Array.isArray(it.variants.colors)) ? it.variants.colors.map(c => c.color || c) : [];
+
+          const el = document.createElement('article');
+          el.className = 'card';
+
+          if (img) {
+            const imageEl = document.createElement('img');
+            imageEl.src = img;
+            imageEl.alt = title;
+            el.appendChild(imageEl);
+          }
+
+          const body = document.createElement('div');
+          body.className = 'card-body';
+
+          const h3 = document.createElement('div');
+          h3.className = 'card-title';
+          h3.textContent = title;
+
+          const priceEl = document.createElement('div');
+          priceEl.className = 'price';
+          priceEl.textContent = price ? `£${price}` : '';
+
+          const descEl = document.createElement('div');
+          descEl.className = 'muted';
+          descEl.textContent = desc.replace(/<[^>]*>?/gm, '').slice(0, 140) + (desc.length > 140 ? '…' : '');
+
+          const variants = document.createElement('div');
+          variants.className = 'variants';
+          if (sizes.length) {
+            const v = document.createElement('span');
+            v.className = 'badge';
+            v.textContent = `Sizes: ${sizes.join(', ')}`;
+            variants.appendChild(v);
+          }
+          if (colors.length) {
+            const v = document.createElement('span');
+            v.className = 'badge';
+            v.textContent = `Colors: ${colors.join(', ')}`;
+            variants.appendChild(v);
+          }
+
+          body.appendChild(h3);
+          body.appendChild(priceEl);
+          body.appendChild(descEl);
+          body.appendChild(variants);
+          el.appendChild(body);
+
+          grid.appendChild(el);
+        }
+      } catch (e) {
+        console.warn('Merch list load failed:', e);
+      }
+    });
+  </script>
+</body>
+</html>

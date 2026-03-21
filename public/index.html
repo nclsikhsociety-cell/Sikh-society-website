@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NCLSikhSoc — North East Sikh Soc</title>
+  <meta name="description" content="Official website of NCLSikhSoc (North East Sikh Soc)" />
+  <meta property="og:title" content="NCLSikhSoc — North East Sikh Soc" />
+  <meta property="og:description" content="Events, culture, and community from NCLSikhSoc" />
+  <link rel="stylesheet" href="styles.css?v=12" />
+  <script defer src="script.js?v=12"></script>
+  <style>
+    /* Ensure two-column hero with right-side Instagram */
+    #hero .container { display: grid; grid-template-columns: 0.4fr 0.6fr; gap: 24px; align-items: start; }
+    .hero-caption { background: rgba(255,255,255,0.06); padding: 16px; border-radius: 12px; }
+    [data-theme="dark"] .hero-caption, body[data-theme="dark"] .hero-caption { background: rgba(255,255,255,0.08); }
+    .hero-instagram { min-height: 520px; }
+    .instagram-embed { width: 100%; min-height: 520px; border: 0; overflow: hidden; }
+    .widget-fallback { margin-top: 12px; }
+    @media (max-width: 640px) { #hero .container { grid-template-columns: 1fr; } }
+  </style>
+  <style>
+    @media (min-width: 800px) {
+      #hero .container { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 24px; align-items: start; }
+    }
+    .btn.btn-outline { color: #0b1e3b !important; border-color: rgba(0,0,0,0.25) !important; }
+    .hero-instagram { min-height: 520px; }
+
+    /* Instagram loading skeleton (mobile-friendly) */
+    .instagram-skeleton {
+      display: grid; place-items: center; min-height: 520px;
+      border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface); color: var(--muted); padding: 16px;
+    }
+    .instagram-skeleton .skeleton-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%;
+    }
+    .instagram-skeleton .skeleton-item {
+      height: 100px; border-radius: 8px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(0,0,0,0.10), rgba(0,0,0,0.06));
+      background-size: 200px 100%;
+      animation: shimmer 1.2s infinite;
+    }
+    .instagram-skeleton .skeleton-title { font-weight: 700; margin-bottom: 8px; }
+    .instagram-skeleton .skeleton-note { font-size: 0.9rem; margin-top: 8px; }
+    @keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: 200px 0; } }
+  </style>
+</head>
+<body class="home">
+  <!-- Header -->
+  <header class="site-header" id="header">
+    <div class="container">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="crest" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#0b1e3b"/>
+              <stop offset="100%" stop-color="#14325e"/>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="48" height="48" rx="10" fill="url(#crest)" stroke="#c9a227" stroke-width="3"/>
+          <path d="M20 42c6-3 12-3 24 0" stroke="#c9a227" stroke-width="2" fill="none"/>
+        </svg>
+        <div class="site-title" id="site-title">NCLSikhSoc <small style="font-weight:500;color:var(--muted);">— North East Sikh Soc</small></div>
+      </div>
+      <div class="spacer-md" aria-hidden="true"></div>
+      <div class="theme-toggle">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode">Toggle Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="site-nav" id="site-nav" aria-label="Main">
+    <div class="container">
+      <div class="nav-links" id="nav-list">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="about.html">About</a>
+        <a href="events.html">Events</a>
+        <a href="merch.html">Merch</a>
+        <a href="donations.html">Donations</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main: Two-column hero -->
+  <main id="content" class="content container-full">
+    <section class="section hero" id="hero">
+      <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+        <!-- Left: Welcome caption (CMS editable) -->
+        <div class="hero-caption">
+          <h1 id="home-hero"></h1>
+          <div id="home-caption">
+            <p class="lead">Exploring society, culture, and community through research, events, and collaboration.</p>
+            <p>Join us for talks, workshops, and collaborative projects throughout the year.</p>
+          </div>
+          <p class="actions">
+            <a class="btn btn-outline" href="donations.html">Donate</a>
+          </p>
+        </div>
+
+
+        <!-- Right: Instagram Elfsight embed (loaded from CMS-managed snippet) -->
+        <div class="hero-instagram" aria-label="Instagram Feed">
+
+          <div id="instagram-embed" class="instagram-embed"></div>
+          <!-- Always-visible fallback link for accessibility and degraded mode -->
+          <div class="widget-fallback">
+            <p>If the Instagram feed doesn’t load, please visit our profile:</p>
+            <p><a class="btn btn-primary" href="https://www.instagram.com/your_society" target="_blank" rel="noopener">Visit Instagram</a></p>
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', async function () {
+              try {
+                const res = await fetch('content/instagram-embed.html', { cache: 'no-store' });
+                if (!res.ok) throw new Error('Embed fetch failed');
+                const raw = await res.text();
+
+                // Parse snippet and support multiple providers safely
+                const tmp = document.createElement('div');
+                tmp.innerHTML = raw;
+
+                const container = document.getElementById('instagram-embed');
+                if (!container) return;
+
+                // Elfsight branch (preferred)
+                const elfsightDiv = tmp.querySelector('[class*="elfsight-app-"]');
+                if (elfsightDiv) {
+                  container.innerHTML = '';
+                  // Render immediately; disable lazy if present
+                  elfsightDiv.removeAttribute('data-elfsight-app-lazy');
+                  container.appendChild(elfsightDiv);
+                  // Remove skeleton immediately to avoid duplicate "Loading feed" above
+                  const skeleton = document.getElementById('instagram-skeleton');
+                  if (skeleton) { skeleton.remove(); }
+
+                  const widgetSrc = 'https://elfsightcdn.com/platform.js';
+                  const hasWidget = Array.from(document.scripts).some(s => s.src && s.src.indexOf('elfsightcdn.com/platform.js') !== -1);
+                  if (!hasWidget) {
+                    const s = document.createElement('script');
+                    s.src = widgetSrc;
+                    s.async = true;
+                    s.defer = true;
+                    s.onload = () => setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+                    document.head.appendChild(s);
+                  } else {
+                    // Reinitialize Elfsight by reloading the platform script (cache-busted)
+                    const s = document.createElement('script');
+                    s.src = widgetSrc + '?v=' + Date.now();
+                    s.async = true;
+                    s.defer = true;
+                    s.onload = () => setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+                    document.head.appendChild(s);
+                  }
+                }
+
+                // Iframe providers (SnapWidget / LightWidget)
+                const iframe = null; // non-Elfsight providers disabled
+                if (iframe) {
+                  // Force HTTPS if protocol-relative
+                  const src = iframe.getAttribute('src') || '';
+                  if (src.startsWith('//')) iframe.setAttribute('src', 'https:' + src);
+
+                  // Normalize attributes/styles
+                  iframe.setAttribute('style', 'width:100%;border:0;overflow:hidden;min-height:520px;');
+
+                  // Inject iframe only
+                  container.innerHTML = '';
+                  container.appendChild(iframe);
+                  const skeleton = document.getElementById('instagram-skeleton');
+                  if (skeleton) skeleton.style.display = 'none';
+
+                  // Provider-specific script (loaded once)
+                  if (src.includes('snapwidget.com')) {
+                    const widgetSrc = 'https://snapwidget.com/js/snapwidget.js';
+                    const hasWidget = Array.from(document.scripts).some(s => s.src && s.src.indexOf('snapwidget.com/js/snapwidget.js') !== -1);
+                    if (!hasWidget) {
+                      const s = document.createElement('script');
+                      s.src = widgetSrc;
+                      s.async = true;
+                      s.onload = () => setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+                      document.head.appendChild(s);
+                    }
+                  } else if (src.includes('lightwidget.com')) {
+                    const widgetSrc = 'https://cdn.lightwidget.com/widgets/lightwidget.js';
+                    const hasWidget = Array.from(document.scripts).some(s => s.src && s.src.indexOf('cdn.lightwidget.com/widgets/lightwidget.js') !== -1);
+                    if (!hasWidget) {
+                      const s = document.createElement('script');
+                      s.src = widgetSrc;
+                      s.async = true;
+                      s.onload = () => setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+                      document.head.appendChild(s);
+                    }
+                  }
+                }
+
+                // Enforce two-column layout on desktop, stack on mobile
+                (function ensureTwoColumnLayout() {
+                  const insta = document.querySelector('.hero-instagram');
+                  const parent = insta && insta.parentElement;
+                  if (!parent) return;
+                  function applyLayout() {
+                    if (window.matchMedia('(min-width: 900px)').matches) {
+                      parent.style.display = 'grid';
+                      parent.style.gridTemplateColumns = '1fr 1fr';
+                      parent.style.gap = '24px';
+                      if (insta) insta.style.minHeight = '520px';
+                    } else {
+                      parent.style.display = '';
+                      parent.style.gridTemplateColumns = '';
+                      parent.style.gap = '';
+                      if (insta) insta.style.minHeight = '';
+                    }
+                  }
+                  applyLayout();
+                  window.addEventListener('resize', applyLayout);
+                })();
+
+                // Ensure a simple footer is present
+                (function ensureFooter() {
+                  if (!document.querySelector('footer.site-footer')) {
+                    const f = document.createElement('footer');
+                    f.className = 'site-footer';
+                    f.innerHTML = '<div class="container"><p>© ' + new Date().getFullYear() + ' NCLSikhSoc · <a href="https://www.instagram.com/your_society" target="_blank" rel="noopener">Instagram</a></p></div>';
+                    f.style.borderTop = '1px solid #eee';
+                    f.style.padding = '24px';
+                    f.style.textAlign = 'center';
+                    f.style.color = '#666';
+                    document.body.appendChild(f);
+                  }
+                })();
+
+              } catch (e) {
+                console.warn('Instagram widget load failed:', e);
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" id="cta">
+      <div class="container">
+        <div id="cta-content" class="cta-text"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© NCLSikhSoc</div>
+  </footer>
+
+  <!-- Load CMS-managed home caption -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        if (window.loadMarkdown) {
+          window.loadMarkdown('content/home-hero.md', 'home-hero');
+          window.loadMarkdown('content/home.md', 'home-caption');
+          window.loadMarkdown('content/cta.md', 'cta-content');
+        }
+      } catch (e) { console.warn('Home content load failed:', e); }
+    });
+  </script>
+</body>
+</html>

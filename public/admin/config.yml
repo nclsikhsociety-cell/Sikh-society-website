@@ -1,0 +1,124 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+media_folder: "public/uploads"
+public_folder: "/uploads"
+locale: "en"
+
+collections:
+  # Merchandise collection (JSON) with per-collection media overrides
+  - label: "Merchandise"
+    name: "merch"
+    files:
+      - label: "Merchandise Items"
+        name: "items"
+        file: "public/content/merch.json"
+        format: "json"
+        media_folder: "public/uploads/merch"
+        public_folder: "/uploads/merch"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}} — £{{fields.price}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "lowercase-hyphenated id", pattern: ["^[a-z0-9-]+$", "Use lowercase letters, numbers and hyphens only."] }
+              - { label: "Price (GBP)", name: "price", widget: "number", value_type: "float", min: 0 }
+              - label: "Images"
+                name: "images"
+                widget: "list"
+                summary: "{{fields.image}}"
+                field:
+                  label: "Image"
+                  name: "image"
+                  widget: "image"
+                  choose_url: true
+              - { label: "Description", name: "description", widget: "markdown" }
+              - label: "Variants"
+                name: "variants"
+                widget: "object"
+                fields:
+                  - label: "Sizes"
+                    name: "sizes"
+                    widget: "select"
+                    multiple: true
+                    options: ["XS", "S", "M", "L", "XL"]
+                  - label: "Colors"
+                    name: "colors"
+                    widget: "list"
+                    field: { label: "Color", name: "color", widget: "string" }
+              - { label: "Published", name: "published", widget: "boolean", default: true }
+              - { label: "Stock", name: "stock", widget: "number", default: 0, min: 0 }
+
+  # Events managed via index.json (list of items) with status including "To Be Decided"
+  - label: "Events"
+    name: "events"
+    files:
+      - label: "Events Index"
+        name: "events_index"
+        file: "public/content/events/index.json"
+        format: "json"
+        media_folder: "public/uploads/events"
+        public_folder: "/uploads/events"
+        fields:
+          - label: "Items"
+            name: "items"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Date", name: "date", widget: "datetime", required: false }
+              - { label: "Location", name: "location", widget: "string", required: false }
+              - label: "Status"
+                name: "status"
+                widget: "select"
+                options: ["Scheduled", "To Be Decided", "Postponed", "Cancelled"]
+                required: false
+              - { label: "Excerpt", name: "excerpt", widget: "text", required: false }
+              - { label: "Path", name: "path", widget: "string", hint: "Link to the full event page (e.g., /content/events/2026-03-15-gurmat-workshop.md)", required: false }
+              - { label: "Cover Image", name: "image", widget: "image", required: false }
+
+  # Single-file pages
+  - label: "Pages"
+    name: "pages"
+    media_folder: "public/uploads/pages"
+    public_folder: "/uploads/pages"
+    files:
+      - label: "Home Hero Title"
+        name: "home_hero"
+        file: "public/content/home-hero.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown", hint: "Plain text title (do not use # heading here)" }
+      - label: "Home Caption"
+        name: "home_caption"
+        file: "public/content/home.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Homepage CTA"
+        name: "cta"
+        file: "public/content/cta.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown", hint: "You can include raw HTML for a button link" }
+      - label: "About"
+        name: "about"
+        file: "public/content/about.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Donations"
+        name: "donations"
+        file: "public/content/donations.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "FAQ"
+        name: "faq"
+        file: "public/content/faq.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Contact"
+        name: "contact"
+        file: "public/content/contact.md"
+        fields:
+          - { label: "Body", name: "body", widget: "markdown" }

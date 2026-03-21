@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin — Merchandise</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", sans-serif; background: #fff; color: #0c1524; }
+    header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; background:#fff; position: sticky; top: 0; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px 20px; }
+    .note { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:12px 14px; margin:16px 0; color:#445066; }
+    a { color:#14325e; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap"><strong>Site Admin</strong> — Merchandise Management</div>
+  </header>
+  <div class="wrap">
+    <div class="note">
+      <p>Use this dashboard to manage merchandise: add Title, Price, Images, Description, and basic Variants (sizes, colors). Use the Draft → Publish flow to control when changes go live.</p>
+      <p>If you are not logged in, click the “Login” button in the top-right of the CMS.</p>
+    </div>
+  </div>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
+  <!-- Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>
