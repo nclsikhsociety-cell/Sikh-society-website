@@ -3,7 +3,7 @@ backend:
   branch: main
 
 publish_mode: editorial_workflow
-media_folder: "uploads"
+media_folder: "public/uploads"
 public_folder: "/uploads"
 locale: "en"
 
@@ -13,9 +13,9 @@ collections:
     files:
       - label: "Merchandise Items"
         name: "items"
-        file: "content/merch.json"
+        file: "public/content/merch.json"
         format: "json"
-        media_folder: "uploads/merch"
+        media_folder: "public/uploads/merch"
         public_folder: "/uploads/merch"
         fields:
           - label: "Items"
@@ -41,9 +41,9 @@ collections:
     files:
       - label: "Events Index"
         name: "events_index"
-        file: "content/events/index.json"
+        file: "public/content/events/index.json"
         format: "json"
-        media_folder: "uploads/events"
+        media_folder: "public/uploads/events"
         public_folder: "/uploads/events"
         fields:
           - label: "Items"
@@ -60,12 +60,12 @@ collections:
     files:
       - label: "Home Hero Title"
         name: "home_hero"
-        file: "content/home-hero.md"
+        file: "public/content/home-hero.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
 
       - label: "About"
         name: "about"
-        file: "content/about.md"
+        file: "public/content/about.md"
         fields:
           - { label: "Body", name: "body", widget: "markdown" }
