@@ -1,1 +1,1 @@
-Welcome to the Newcastle sikh society, please take a look around, thanks
+Welcome to the Newcastle sikh society, please take a look around, thanks and enjoy testing
